@@ -4,6 +4,17 @@ from flask import Flask, request
 app = Flask(__name__)
 
 
-@app.route("/some_route_here", methods=["GET"])
-def method_name():
-    return {}
+@app.route("/api/calcs/<n>", methods=["GET"])
+def subtract_by_one(n):
+    try:
+        num = int(n)
+    except ValueError:
+        return '', 400
+    if num < 1:
+        return '', 404
+    answer = {}
+    result = num - 1
+    answer['dec'] = result
+    result = hex(num)
+    answer['hex'] = result
+    return answer
